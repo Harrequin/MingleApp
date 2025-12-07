@@ -1,2 +1,2 @@
 # MingleApp
-Courswork for Cloud Computing
+Coursework for Cloud Computing
