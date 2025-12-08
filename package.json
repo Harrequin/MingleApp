@@ -30,7 +30,7 @@
     "supertest": "^7.1.4"
   },
   "scripts": {
-    "start": "node routes/app.js",
-    "dev": "nodemon routes/app.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   }
 }

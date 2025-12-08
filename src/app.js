@@ -1,4 +1,7 @@
 // Import the Express library
+require('dotenv').config();
+// initialize DB connection (reads MONGO_URI from .env)
+require('./config/db');
 const express = require('express');
 const app = express();
 
@@ -12,11 +15,11 @@ app.get('/', (req, res) => {
 
 // API info route: generic welcome + API description
 app.get('/api', (req, res) => {
-  res.json({ message: 'Welcome to the Mingle App API at /api' });
+  res.json({ message: 'Welcome to the Mingle App coursework by Jamie Allen' });
 });
 
 // Add the Users routes (mounted under /api/users)
-const usersRoute = require('./users');
+const usersRoute = require('./routes/users');
 app.use('/api/users', usersRoute);
 
 // Start the server on port 3000 (or from env)

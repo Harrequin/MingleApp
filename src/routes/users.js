@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../models/Users'); // minimal user model
+const User = require('../../models/Users'); // minimal user model
 
 // Simple route to verify users route is loaded
 router.get('/', async (req, res) => {
