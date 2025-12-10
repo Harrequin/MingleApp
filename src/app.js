@@ -1,12 +1,16 @@
 // Import the Express library
 require('dotenv').config();
+
+
 // initialize DB connection (reads MONGO_URI from .env)
 require('./config/db');
 const express = require('express');
 const app = express();
 
-// Basic middleware
+
+//middleware
 app.use(express.json());
+
 
 // Root route: redirect or basic info
 app.get('/', (req, res) => {

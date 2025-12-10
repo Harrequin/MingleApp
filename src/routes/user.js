@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+
 //import user model
 const User = require('../models/user');
 
-// Verify users route is loaded
+// GET - retrieves list of users
 router.get('/', async (req, res) => {
 	try {
 		// return an array of users (do not expose passwords)
@@ -14,6 +15,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
+// POST - creates a new user
 router.post('/', async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
@@ -25,4 +27,6 @@ router.post('/', async (req, res) => {
 		res.status(500).json({ message: 'Server error', error: err.message });
 	}
 });
+
+
 module.exports = router;
