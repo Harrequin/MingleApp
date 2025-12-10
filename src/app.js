@@ -20,7 +20,7 @@ app.get('/api', (req, res) => {
 
 // Add the Users routes
 const usersRoute = require('./routes/user');
-app.use('/api/users', usersRoute);
+app.use('/api/user', usersRoute);
 
 // Start the server on port 3000 (or from env)
 const PORT = process.env.PORT || 3000;
