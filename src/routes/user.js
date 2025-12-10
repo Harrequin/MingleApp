@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
+//import user model
+const User = require('./models/user'); // minimal user model
 
-const User = require('../routes/user'); // minimal user model
-
-// Simple route to verify users route is loaded
+//verify users route is loaded
 router.get('/', async (req, res) => {
 	try {
-		// return an empty list (do not expose passwords)
+		// return an empty lists
 		const users = await User.find().select('name email createdAt').limit(50).lean();
 		res.json(users);
 	} catch (err) {
