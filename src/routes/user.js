@@ -14,4 +14,15 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.post('/', async (req, res) => {
+	try {
+		const { name, email, password } = req.body;
+		const newUser = new User({ name, email, password });
+		await newUser.save();
+		res.status(201).json({ message: 'User created', userId: newUser._id });
+	}
+	catch (err) {
+		res.status(500).json({ message: 'Server error', error: err.message });
+	}
+});
 module.exports = router;
