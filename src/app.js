@@ -18,9 +18,9 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Welcome to the Mingle App coursework by Jamie Allen' });
 });
 
-// Add the Users routes
+// Add the Users routes (mounted at /api/users)
 const usersRoute = require('./routes/user');
-app.use('/api/user', usersRoute);
+app.use('/api/users', usersRoute);
 
 // Start the server on port 3000 (or from env)
 const PORT = process.env.PORT || 3000;
