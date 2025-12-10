@@ -10,7 +10,7 @@ app.use(express.json());
 
 // Root route: redirect or basic info
 app.get('/', (req, res) => {
-  res.json({ message: 'Mingle API is running. Use /api for API routes.' });
+  res.json({ message: 'Mingle API is running.' });
 });
 
 // API info route: generic welcome + API description
@@ -19,7 +19,7 @@ app.get('/api', (req, res) => {
 });
 
 // Add the Users routes (mounted under /api/users)
-const usersRoute = require('./routes/users');
+const usersRoute = require('./routes/user');
 app.use('/api/users', usersRoute);
 
 // Start the server on port 3000 (or from env)
