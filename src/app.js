@@ -7,17 +7,6 @@ require('./config/db');
 const express = require('express');
 const app = express();
 
-
-// AI-generated: lightweight request logger
-app.use((req, res, next) => {
-  const start = Date.now();
-  res.on('finish', () => {
-    const duration = Date.now() - start;
-    console.log(`${req.method} ${req.originalUrl} -> ${res.statusCode} (${duration}ms)`);
-  });
-  next();
-});
-
 //middleware
 app.use(express.json());
 
@@ -42,12 +31,5 @@ app.use('/api/posts', postsRoute);
 
 // Starts the server on port 3000, or from the env file. 
 const PORT = process.env.PORT || 3000;
-
-// AI-generated: add listen error handler
-const server = app.listen(PORT, "0.0.0.0", () =>
-  console.log(`Mingle API listening on port ${PORT}`)
-);
-
-server.on('error', (err) => {
-  console.error(`Server failed to start on port ${PORT}:`, err.message || err);
-});
+app.listen(PORT, "0.0.0.0", () =>
+   console.log(`Mingle API listening on port ${PORT}`));

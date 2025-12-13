@@ -3,6 +3,15 @@ const router = express.Router()
 
 const Post = require ('../models/post')
 
+router.get('/', async (req, res) => {
+    try {
+        const posts = await Post.find().limit(50).lean();
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+})
+
 router.post('/',  async (req, res) => {
     try {
         const { topic, content, author } = req.body

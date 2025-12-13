@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 
 const postSchema = new mongoose.Schema({
-  topic: { type: String, required: false },
-  content: { type: String, required: false },
-  author: { type: String, required: false },
+  topic: { type: String, required: true },
+  content: { type: String, required: true },
+  author: { type: String, required: true },
   likes: { type: Number, default: 0},
   dislikes: { type: Number, default: 0},
   createdAt: { type: Date, default: Date.now }
