@@ -7,7 +7,7 @@ const User = require('../models/user');
 // GET - retrieves list of users
 router.get('/', async (req, res) => {
 	try {
-		// return an array of users (does not return passwords)
+		// return an array of users
 		const users = await User.find().select('name email createdAt').limit(50).lean();
 		console.log(users);
 		res.json(users);
