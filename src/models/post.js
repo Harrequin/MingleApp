@@ -1,14 +1,14 @@
+// Post data (messages, likes, comments, expiry)
 const mongoose = require('mongoose');
 
-// Comment Schema
+// Comment data
 const commentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   text: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });
 
-
-// Main Post Schema
+// Post fields
 const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   topics: { 
@@ -33,12 +33,12 @@ const postSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-// check if post is expired
+// checks status (Live/Expired)
 postSchema.virtual('status').get(function() {
   return new Date() > this.expiresAt ? 'Expired' : 'Live';
 });
 
-// check time left until expiration
+// Time left until it expires
 postSchema.virtual('timeLeft').get(function() {
   const now = new Date();
   const diff = this.expiresAt - now;
@@ -53,9 +53,9 @@ postSchema.virtual('timeLeft').get(function() {
   return `${minutes}m`;
 });
 
-// ensures virtual fields are included when converting to JSON or Object
+// Include status/timeLeft when sending data
 postSchema.set('toJSON', { virtuals: true });
 postSchema.set('toObject', { virtuals: true });
 
-// Exports the Post model
+// Make the model available
 module.exports = mongoose.model('Post', postSchema);

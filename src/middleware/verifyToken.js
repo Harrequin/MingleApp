@@ -1,18 +1,19 @@
-const { send } = require('express/lib/response')
+// verifyToken.js middleware to protect routes
 const jsonwebtoken = require('jsonwebtoken')
-
-function auth(req,res,next){
+// Middleware function to verify token
+function auth(req, res, next) {
     const token = req.header('auth-token')
-    if(!token){
-        return res.status(401).send({message:'Access denied'})
+    // If no token, deny access
+    if (!token) {
+        return res.status(401).send({ message: 'Access denied' })
     }
-    try{
-        const verified = jsonwebtoken.verify(token,process.env.TOKEN_SECRET)
-        req.user=verified
+    try {
+        const verified = jsonwebtoken.verify(token, process.env.TOKEN_SECRET)
+        req.user = verified
         next()
-    }catch(err){
-        return res.status(401).send({message:'Invalid token'})
+    } catch (err) {
+        return res.status(401).send({ message: 'Invalid token' })
     }
 }
-
-module.exports=auth
+// Export the middleware
+module.exports = auth

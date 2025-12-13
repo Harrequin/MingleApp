@@ -1,16 +1,17 @@
+// User routes
 const express = require('express');
 const router = express.Router();
 
-//import user model
+// Use the User model
 const User = require('../models/user');
 
-//import verification middleware
+// Checks the token
 const verifyToken = require('../middleware/verifyToken');
 
-// GET - retrieves list of users (protected route)
+// GET /api/users - list users
 router.get('/', verifyToken, async (req, res) => {
 	try {
-		// return an array of users (excluding password)
+		// return an array of users but excludes the password field
 		const users = await User.find().select('-password').limit(50).lean();
 		res.json(users);
 	} catch (err) {
@@ -18,7 +19,7 @@ router.get('/', verifyToken, async (req, res) => {
 	}
 });
 
-// POST - creates a new user
+// POST /api/users - create user 
 router.post('/', async (req, res) => {
 	try {
 		const { name, email, password } = req.body;

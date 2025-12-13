@@ -1,5 +1,6 @@
+// Code for validating user input during registration and login
 const joi = require('joi')
-
+// Registration validation
 const registerValidation = (data) => {
     const schemaValidation = joi.object({
         name:joi.string().required().min(3).max(256),
@@ -8,7 +9,7 @@ const registerValidation = (data) => {
     })
     return schemaValidation.validate(data)
 }
-
+// Login validation
 const loginValidation = (data) => {
     const schemaValidation = joi.object({
         email:joi.string().required().min(6).max(256).email(),
@@ -16,6 +17,6 @@ const loginValidation = (data) => {
     })
     return schemaValidation.validate(data)
 }
-
+// Makes the functions available
 module.exports.registerValidation = registerValidation
 module.exports.loginValidation = loginValidation

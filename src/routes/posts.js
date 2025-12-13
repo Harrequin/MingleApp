@@ -1,3 +1,4 @@
+// Post routes
 
 const express = require('express')
 const router = express.Router()
@@ -5,7 +6,7 @@ const router = express.Router()
 const Post = require ('../models/post')
 const verifyToken = require('../middleware/verifyToken')
 
-// GET all posts with optional topic, status, and sortBy filters
+// GET /api/posts - list posts with filters for topic or expired/live)
 router.get('/', verifyToken, async (req, res) => {
     try {
         const { topic, status, sortBy } = req.query;
@@ -41,7 +42,7 @@ router.get('/', verifyToken, async (req, res) => {
     }
 })
 
-// GET single post by ID
+// GET /api/posts/:id,, gets one post
 router.get('/:id', verifyToken, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id)
@@ -58,7 +59,7 @@ router.get('/:id', verifyToken, async (req, res) => {
     }
 })
 
-// POST create new post
+// POST /api/posts,  creates a new post
 router.post('/', verifyToken, async (req, res) => {
     // Expected body: { title, topics, content, expirationHours }
     try {
@@ -89,7 +90,7 @@ router.post('/', verifyToken, async (req, res) => {
     }
 })
 
-// PUT like a post
+// PUT /api/posts/:id/like - like a post (with expectations)
 router.put('/:id/like', verifyToken, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
@@ -122,7 +123,7 @@ router.put('/:id/like', verifyToken, async (req, res) => {
     }
 })
 
-// PUT dislike a post
+// PUT /api/posts/:id/dislike - dislike a post (with expectations)
 router.put('/:id/dislike', verifyToken, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
@@ -131,7 +132,7 @@ router.put('/:id/dislike', verifyToken, async (req, res) => {
             return res.status(404).json({ message: 'Post not found' });
         }
         
-        // TC11: Owner cannot dislike their own post
+        // stops owner liking their own post
         if (post.author.toString() === req.user._id) {
             return res.status(403).json({ message: 'You cannot dislike your own post' });
         }
@@ -140,7 +141,7 @@ router.put('/:id/dislike', verifyToken, async (req, res) => {
             return res.status(403).json({ message: 'Cannot dislike an expired post' });
         }
         
-        // Check if user already disliked this post
+        // stops user disliking the same post twice
         if (post.dislikedBy.includes(req.user._id)) {
             return res.status(400).json({ message: 'You have already disliked this post' });
         }
@@ -155,7 +156,7 @@ router.put('/:id/dislike', verifyToken, async (req, res) => {
     }
 })
 
-// POST add comment to a post
+// POST /api/posts/:id/comment - add a comment (not expired)
 router.post('/:id/comment', verifyToken, async (req, res) => {
     try {
         const { text } = req.body;
@@ -188,7 +189,7 @@ router.post('/:id/comment', verifyToken, async (req, res) => {
     }
 })
 
-// DELETE own post
+// DELETE /api/posts/:id  deletes your own post
 router.delete('/:id', verifyToken, async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);

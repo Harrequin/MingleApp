@@ -1,5 +1,7 @@
-
-//code taken from     cc/Class-4/Lab4.1-Building-the-MiniFilm-application.md
+// Auth routes
+// - Register: create user (password is safely stored)
+// - Login: give a token if details are correct
+// - Me: show current user (needs token)
 const express = require('express')
 const router = express.Router()
 
@@ -9,25 +11,26 @@ const {registerValidation,loginValidation} = require('../validations/validation'
 const bcryptjs = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 
+// POST /api/auth/register
 router.post('/register', async(req,res)=>{
 
-    // Validation 1 to check user input
+    // Checks user input
     const {error} = registerValidation(req.body)
     if(error){
         return res.status(400).send({message:error['details'][0]['message']})
     }
 
-    // Validation 2 to check if user exists!
+    // checks user existence
     const userExists = await User.findOne({email:req.body.email})
     if(userExists){
         return res.status(400).send({message:'User already exists'})
     }
 
-    // I created a hashed represenation of my password!
+    // Hides the real password before saving
     const salt = await bcryptjs.genSalt(5)
     const hashedPassword = await bcryptjs.hash(req.body.password,salt)
 
-    // Code to insert data
+    // Saves user
     const user = new User({
         name:req.body.name,
         email:req.body.email,
@@ -42,33 +45,34 @@ router.post('/register', async(req,res)=>{
     
 })
 
+// POST /api/auth/login
 router.post('/login', async(req,res)=>{
 
-    // Validation 1 to check user input
+    //check user input
     const {error} = loginValidation(req.body)
     if(error){
         return res.status(400).send({message:error['details'][0]['message']})
     }
 
-    // Validation 2 to check if user exists!
+    // checks user existence
     const user = await User.findOne({email:req.body.email})
     if(!user){
         return res.status(400).send({message:'User does not exist'})
     } 
     
-    // Validation 3 to check user password
+    // check user password
     const passwordValidation = await bcryptjs.compare(req.body.password,user.password)
     if(!passwordValidation){
         return res.status(400).send({message:'Password is wrong'})
     }
     
-    // Generate an auth-token
+    // Make a login token
     const token = jsonwebtoken.sign({_id:user._id}, process.env.TOKEN_SECRET)
     res.header('auth-token',token).send({'auth-token':token})
 
 })
 
-// GET /me - returns current authenticated user info
+// GET /api/auth/me  current user info
 const verifyToken = require('../middleware/verifyToken')
 
 router.get('/me', verifyToken, async (req, res) => {
