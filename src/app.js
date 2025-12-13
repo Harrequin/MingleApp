@@ -21,6 +21,10 @@ app.get('/api', (req, res) => {
   res.json({ message: 'Welcome to the Mingle App coursework by Jamie Allen' });
 });
 
+// Add the Auth routes (mounted at /api/auth)
+const authRoute = require('./routes/auth');
+app.use('/api/auth', authRoute);
+
 // Add the Users routes (mounted at /api/users)
 const usersRoute = require('./routes/user');
 app.use('/api/users', usersRoute);

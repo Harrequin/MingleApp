@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const Post = require ('../models/post')
+const verifyToken = require('../middleware/verifyToken')
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
     try {
         const posts = await Post.find().limit(50).lean();
         res.json(posts);
@@ -12,15 +13,15 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/',  async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     try {
-        const { topic, content, author } = req.body
+        const { topic, content } = req.body
 
-        if (!topic || !content || !author) {
-            return res.status(400).json({ message: 'Topic, content, and author are required.' })
+        if (!topic || !content) {
+            return res.status(400).json({ message: 'Topic and content are required.' })
         }
 
-        const newPost = new Post({ topic, content, author })
+        const newPost = new Post({ topic, content, author: req.user._id })
 
         await newPost.save();
 

@@ -4,12 +4,14 @@ const router = express.Router();
 //import user model
 const User = require('../models/user');
 
-// GET - retrieves list of users
-router.get('/', async (req, res) => {
+//import verification middleware
+const verifyToken = require('../middleware/verifyToken');
+
+// GET - retrieves list of users (protected route)
+router.get('/', verifyToken, async (req, res) => {
 	try {
-		// return an array of users
-		const users = await User.find().select('name email createdAt').limit(50).lean();
-		console.log(users);
+		// return an array of users (excluding password)
+		const users = await User.find().select('-password').limit(50).lean();
 		res.json(users);
 	} catch (err) {
 		res.status(500).json({ message: 'Server error', error: err.message });
