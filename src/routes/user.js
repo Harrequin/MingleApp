@@ -1,17 +1,28 @@
-// User routes
+/**
+ * User Routes
+ * 
+ * Handles user listing endpoint.
+ * Protected by JWT authentication middleware.
+ * 
+ * References:
+ * - Express routing: https://expressjs.com/en/guide/routing.html
+ * - Code patterns from BUCI028H6 course materials
+ */
+
 const express = require('express');
 const router = express.Router();
 
-// Use the User model
 const User = require('../models/user');
-
-// Checks the token
 const verifyToken = require('../middleware/verifyToken');
 
-// GET /api/users - list users
+/**
+ * GET /api/users
+ * List all users (protected endpoint)
+ * Requires: auth-token header
+ * Returns: Array of users without passwords
+ */
 router.get('/', verifyToken, async (req, res) => {
 	try {
-		// return an array of users but excludes the password field
 		const users = await User.find().select('-password').limit(50).lean();
 		res.json(users);
 	} catch (err) {
@@ -19,7 +30,10 @@ router.get('/', verifyToken, async (req, res) => {
 	}
 });
 
-// POST /api/users - create user 
+/**
+ * POST /api/users
+ * Create user endpoint (not recommended - use /api/auth/register instead)
+ */
 router.post('/', async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
@@ -31,6 +45,5 @@ router.post('/', async (req, res) => {
 		res.status(500).json({ message: 'Server error', error: err.message });
 	}
 });
-
 
 module.exports = router;
