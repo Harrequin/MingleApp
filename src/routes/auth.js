@@ -38,7 +38,10 @@ router.post('/register', async(req,res)=>{
     })
     try{
         const savedUser = await user.save()
-        res.send(savedUser)
+        // Return user without password
+        const userResponse = savedUser.toObject()
+        delete userResponse.password
+        res.status(201).send(userResponse)
     }catch(err){
         res.status(400).send({message:err})
     }
