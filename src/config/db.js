@@ -16,3 +16,6 @@ if (!MONGO_URI) {
 }
 
 module.exports = mongoose;
+
+
+//Code taken from Lab sessions and built upon/guided by w3schools tutorials

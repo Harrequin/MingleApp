@@ -1,7 +1,9 @@
 // verifyToken.js middleware to protect routes
+
 const jsonwebtoken = require('jsonwebtoken')
 // Middleware function to verify token
 function auth(req, res, next) {
+    
     const token = req.header('auth-token')
     // If no token, deny access
     if (!token) {

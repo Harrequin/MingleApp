@@ -1,7 +1,6 @@
 
 require('dotenv').config();
 
-
 // initialises DB connection (reads MONGO_URI from .env)
 require('./config/db');
 const express = require('express');

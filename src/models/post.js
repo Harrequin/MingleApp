@@ -1,14 +1,14 @@
 // Post data (messages, likes, comments, expiry)
 const mongoose = require('mongoose');
 
-// Comment data
+// Comment data, guided by Labs
 const commentSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   text: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }
 });
 
-// Post fields
+// Post fields, guided by Labs
 const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   topics: { 
@@ -39,6 +39,9 @@ postSchema.virtual('status').get(function() {
 });
 
 // Time left until it expires
+//Schema virtual for time left, developed using lab session code, and stackoverflow posts
+//https://stackoverflow.com/questions/14597241/setting-expiry-time-for-a-collection-in-mongodb-using-mongoose. 
+
 postSchema.virtual('timeLeft').get(function() {
   const now = new Date();
   const diff = this.expiresAt - now;
