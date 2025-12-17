@@ -26,6 +26,7 @@ const router = express.Router();
 const Post = require('../models/post');
 const verifyToken = require('../middleware/verifyToken');
 
+
 // GET /api/posts - get all posts with filtering and sorting
 router.get('/', async (req, res) => {
     try {
@@ -63,6 +64,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+
 // GET /api/posts/:id - get a single post by ID
 router.get('/:id', async (req, res) => {
     try {
@@ -79,6 +81,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 });
+
 
 // POST /api/posts - create a new post (protected)
 router.post('/', verifyToken, async (req, res) => {
@@ -108,6 +111,7 @@ router.post('/', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 });
+
 
 // PUT /api/posts/:id/like - like a post (protected)
 router.put('/:id/like', verifyToken, async (req, res) => {
@@ -143,6 +147,7 @@ router.put('/:id/like', verifyToken, async (req, res) => {
     }
 });
 
+
 // PUT /api/posts/:id/dislike - dislike a post (protected)
 router.put('/:id/dislike', verifyToken, async (req, res) => {
     try {
@@ -177,6 +182,7 @@ router.put('/:id/dislike', verifyToken, async (req, res) => {
     }
 });
 
+
 // POST /api/posts/:id/comment - add a comment to a post (protected)
 router.post('/:id/comment', verifyToken, async (req, res) => {
     try {
@@ -209,6 +215,7 @@ router.post('/:id/comment', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 });
+
 
 // DELETE /api/posts/:id - delete a post (author only, protected)
 router.delete('/:id', verifyToken, async (req, res) => {

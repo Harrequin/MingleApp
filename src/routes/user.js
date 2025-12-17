@@ -9,11 +9,13 @@
  * - Code patterns from BUCI028H6 course materials
  */
 
+
 const express = require('express');
 const router = express.Router();
 
 const User = require('../models/user');
 const verifyToken = require('../middleware/verifyToken');
+
 
 /**
  * GET /api/users
@@ -29,6 +31,7 @@ router.get('/', verifyToken, async (req, res) => {
 		res.status(500).json({ message: 'Server error', error: err.message });
 	}
 });
+
 
 /**
  * POST /api/users

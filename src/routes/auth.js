@@ -10,6 +10,7 @@
  * - Authentication patterns from BUCI028H6 course materials
  */
 
+
 const express = require('express')
 const router = express.Router()
 
@@ -18,6 +19,7 @@ const {registerValidation,loginValidation} = require('../validations/validation'
 
 const bcryptjs = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
+
 
 /**
  * POST /api/auth/register

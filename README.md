@@ -1,6 +1,6 @@
 # Mingle App - Social Media API
 
-A RESTful API for a social media platform with JWT authentication, posts with expiration, and user interactions (likes, dislikes, comments).
+A RESTful API for a social media platform with JWT authentication, posts with expiration, and user interactions
 
 ## Technologies Used
 

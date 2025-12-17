@@ -10,9 +10,10 @@
  * - Virtual expiry logic: https://stackoverflow.com/questions/14597241/setting-expiry-time-for-a-collection-in-mongodb-using-mongoose
  */
 
+
 const mongoose = require('mongoose');
 
-// Comment sub-schema (embedded in posts)
+// Comment sub-schema 
 // Each comment references a user and includes text and timestamp
 const commentSchema = new mongoose.Schema({
   user: { 
@@ -29,6 +30,7 @@ const commentSchema = new mongoose.Schema({
     default: Date.now  // Auto-set when comment created
   }
 });
+
 
 // Main Post schema
 const postSchema = new mongoose.Schema({
@@ -83,16 +85,18 @@ const postSchema = new mongoose.Schema({
   }
 });
 
-// Virtual property: computes post status dynamically
+
+// checks if post is expired
 // Returns 'Live' if post hasn't expired, 'Expired' otherwise
 // Not stored in database - calculated on access
 postSchema.virtual('status').get(function() {
   return new Date() > this.expiresAt ? 'Expired' : 'Live';
 });
 
-// Virtual property: calculates remaining time until expiration
-// Returns human-readable format (e.g., "2d 5h" or "45m")
-// Developed using lab session code and StackOverflow guidance:
+
+// calculates remaining time until expiration
+// returns a string like "2d 5h" or "15m"
+// developed using lab session code and StackOverflow guidance:
 // https://stackoverflow.com/questions/14597241/setting-expiry-time-for-a-collection-in-mongodb-using-mongoose
 postSchema.virtual('timeLeft').get(function() {
   const now = new Date();
