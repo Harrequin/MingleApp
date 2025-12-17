@@ -89,7 +89,10 @@ node test-mingle.js
 
 ## References
 
-Express.js documentation: https://expressjs.com/en/guide/routing.html
-MongoDB Mongoose: https://mongoosejs.com/docs/guide.html
-JWT specification: https://datatracker.ietf.org/doc/html/rfc7519
-Axios HTTP client: https://axios-http.com/docs/intro
+- [Node.js Documentation](https://nodejs.org/en/docs/)
+- [Express.js documentation](https://expressjs.com/en/guide/routing.html)
+- [MongoDB Mongoose](https://mongoosejs.com/docs/guide.html)
+- [JWT specification](https://datatracker.ietf.org/doc/html/rfc7519)
+- [bcryptjs Documentation](https://www.npmjs.com/package/bcryptjs)
+- [Joi Documentation](https://joi.dev/api/?v=17.6.0)
+- [Axios HTTP client](https://axios-http.com/docs/intro)
